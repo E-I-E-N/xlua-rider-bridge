@@ -1,0 +1,9 @@
+{
+  "rider_version": "2026.3",
+  "rider_build": "263.7307.258",
+  "rider_linux_url": "https://download.jetbrains.com/rider/JetBrains.Rider-2026.3.tar.gz",
+  "rider_linux_sha256": "1efc74ffd0ae1edf1437b35629ecf0862eb9746430c4313e6eef408575165c21",
+  "lua_version": "263.7307.258",
+  "lua_url": "https://plugins.jetbrains.com/files/34924/1216272/lua-263.7307.258.zip",
+  "lua_sha256": "c9ba58337edbe8fb7475a182c04aa0f0d38059e0b38c63e1a26999ca4d23e25b"
+}

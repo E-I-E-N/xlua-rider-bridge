@@ -1,0 +1,16 @@
+<idea-plugin>
+  <id>local.xlua.rider.bridge</id>
+  <name>XLua CSharp Navigation</name>
+  <version>0.1.5</version>
+  <vendor url="https://github.com/E-I-E-N/xlua-rider-bridge">E-I-E-N</vendor>
+  <url>https://github.com/E-I-E-N/xlua-rider-bridge</url>
+  <idea-version since-build="263.7307" until-build="263.*" />
+  <description>Navigate from XLua CS types and Lua type aliases to CSharp declarations using Rider symbol navigation.</description>
+  <depends>com.intellij.modules.rider</depends>
+  <depends>com.intellij.lua</depends>
+  <extensions defaultExtensionNs="com.intellij">
+    <notificationGroup id="XLua Navigation" displayType="BALLOON" />
+    <gotoDeclarationHandler implementation="local.xlua.XluaDeclarationHandler" order="first" />
+    <projectService serviceImplementation="local.xlua.XluaNavigationService" />
+  </extensions>
+</idea-plugin>

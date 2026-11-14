@@ -1,0 +1,8 @@
+/build/
+/dist/
+/.sdk/
+/.idea/
+*.iml
+__pycache__/
+*.pyc
+.DS_Store

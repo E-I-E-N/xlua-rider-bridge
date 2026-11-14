@@ -1,0 +1,4 @@
+XLua CSharp Navigation is an independent community plugin.
+JetBrains Rider and the JetBrains Lua plugin are separate dependencies governed
+by their respective licenses. Their binaries are not included in this package.
+This project is not affiliated with or endorsed by JetBrains or Tencent.
