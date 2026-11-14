@@ -76,6 +76,18 @@ def main():
     dist.mkdir(exist_ok=True)
     package = dist / f"xlua-rider-bridge-{version}.zip"
     package.write_bytes(pack([("xlua-rider-bridge/lib/xlua-rider-bridge.jar", jar)]))
+    repository = ET.Element("plugins")
+    plugin = ET.SubElement(repository, "plugin", {
+        "id": metadata.findtext("id"),
+        "version": version,
+        "url": f"{metadata.findtext('url')}/releases/download/v{version}/{package.name}",
+    })
+    for element in metadata:
+        if element.tag in {"name", "description", "idea-version", "depends"}:
+            plugin.append(ET.fromstring(ET.tostring(element)))
+    ET.indent(repository, space="  ")
+    index = dist / "updatePlugins.xml"
+    index.write_bytes(ET.tostring(repository, encoding="utf-8", xml_declaration=True) + b"\n")
     checksum = hashlib.sha256(package.read_bytes()).hexdigest()
     (dist / "SHA256SUMS").write_text(f"{checksum}  {package.name}\n", encoding="utf-8")
     print(package)

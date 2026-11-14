@@ -7,13 +7,20 @@ Navigate from XLua `CS` expressions and Lua type aliases to C# declarations in R
 ## 安装
 
 1. 使用 **Rider 2026.3**，安装并启用 JetBrains 发布的 [Lua 插件](https://plugins.jetbrains.com/plugin/34924-lua)（`com.intellij.lua`）。
-2. 从 [Releases](https://github.com/E-I-E-N/xlua-rider-bridge/releases/latest) 下载 `xlua-rider-bridge-*.zip`，不要下载页面自动生成的 Source code ZIP。
-3. Rider → Settings → Plugins → 齿轮 → **Install Plugin from Disk**，选择 ZIP，按提示重启。
+2. Rider → Settings → Plugins → 齿轮 → **Manage Plugin Repositories**，添加下方固定更新源地址。
+3. 返回 Plugins，搜索 **XLua CSharp Navigation**，选择该自定义仓库的结果，点击 **Install** 并按提示重启。
 4. 打开 Unity/C# 解决方案，等待 Rider 索引完成；将项目的 Lua 根目录加入 Lua 的 Library Roots。
 5. 在 Lua 文件的类型名或方法名上执行 **Go to Declaration**。Visual Studio 键位默认是 **F12**，其他键位以 Rider 菜单显示为准。
 
-同事和其他电脑只需要下载 Release ZIP，按上述步骤安装，无需 Python、JDK 或源码。
-更新时安装新版本 ZIP；卸载入口为 Settings → Plugins → XLua CSharp Navigation → Uninstall。
+```text
+https://github.com/E-I-E-N/xlua-rider-bridge/releases/latest/download/updatePlugins.xml
+```
+
+每台电脑添加一次地址即可，无需 Python、JDK 或源码。Rider 会根据此来源检查更新；是否自动安装更新由 Rider 的插件更新设置决定。
+此前从 ZIP 安装的用户，可在插件 **Additional Info → Updates from** 中选择该自定义仓库，再执行更新。
+卸载入口为 Settings → Plugins → XLua CSharp Navigation → Uninstall。
+
+也可以从 [Releases](https://github.com/E-I-E-N/xlua-rider-bridge/releases/latest) 下载 `xlua-rider-bridge-*.zip`，用 **Install Plugin from Disk** 安装；页面自动生成的 Source code ZIP 是源码。
 
 ## 支持范围
 
@@ -44,7 +51,7 @@ GM.GetTranslation("example")
 - 暂不推断方法返回值、实例变量及复杂动态表达式的 C# 类型。
 - 同名方法重载按候选选择，不根据 Lua 实参推导最合适的重载。
 - 使用 Rider/Lua 插件内部 API；升级 IDE 或 Lua 插件后可能需要适配。
-- 当前通过 GitHub Releases 分发，更新需手动安装。Rider 的自动更新来源提示不影响本地安装或导航。
+- 安装及更新需要能够访问 GitHub 的 Release 下载服务。若提示更新来源未知，在 Additional Info 中重新选择上面的自定义仓库。
 
 ## 从源码构建
 
@@ -63,12 +70,14 @@ python3 -B build.py --rider-home /path/to/Rider --lua-plugin /path/to/lua
 macOS 的 `--rider-home` 可传 Rider `.app`；`--lua-plugin` 也可直接传 `lua.jar`。
 路径以本机实际安装位置为准，构建程序读取 `product-info.json` 核对实际版本。
 
-产物为 `dist/xlua-rider-bridge-<version>.zip` 和 `dist/SHA256SUMS`。
+产物为 `dist/xlua-rider-bridge-<version>.zip`、`dist/SHA256SUMS` 和 `dist/updatePlugins.xml`。索引从同一份插件元数据生成，指向对应版本的 Release 安装包。
 构建只包含源码编译结果、插件元数据和许可证，不包含本机路径、游戏源码或 IDE 日志。
 
 ## 构建与发布
 
-GitHub Actions 会下载并校验固定版本 SDK，在 Linux 上编译和打包。普通推送和 Pull Request 提供构建产物；推送与 `plugin.xml` 版本一致的 `v<version>` 标签后，自动创建 GitHub Release 并上传安装包和 SHA256 校验文件。
+GitHub Actions 会下载并校验固定版本 SDK，在 Linux 上编译和打包。普通推送和 Pull Request 提供构建产物；推送与 `plugin.xml` 版本一致的 `v<version>` 标签后，自动上传安装包、SHA256 校验文件及插件仓库索引，全部上传成功后才公开 Release 并设为 latest。
+
+固定更新源通过 latest 指向最新 Release 自带的索引，发版时无需手改索引版本或下载地址。日常源码提交不会改变用户的更新源。发布维护版本或回退版本前，需确认将它设为 latest 是否符合预期。
 
 发布前需在目标 Rider 上验证：直接 `CS` 类型、UnityEngine 类型、同文件和跨文件别名方法、原有 Lua 跳转和引用。CI 编译成功不代表 IDE 交互验收完成。
 

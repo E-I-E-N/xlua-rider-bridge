@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>local.xlua.rider.bridge</id>
   <name>XLua CSharp Navigation</name>
-  <version>0.1.5</version>
+  <version>0.1.6</version>
   <vendor url="https://github.com/E-I-E-N/xlua-rider-bridge">E-I-E-N</vendor>
   <url>https://github.com/E-I-E-N/xlua-rider-bridge</url>
   <idea-version since-build="263.7307" until-build="263.*" />

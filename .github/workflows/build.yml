@@ -63,6 +63,7 @@ jobs:
           path: |
             dist/*.zip
             dist/SHA256SUMS
+            dist/updatePlugins.xml
           if-no-files-found: error
 
   release:
@@ -82,4 +83,5 @@ jobs:
           GH_REPO: ${{ github.repository }}
           RELEASE_TAG: ${{ github.ref_name }}
         run: |
-          gh release create "$RELEASE_TAG" dist/*.zip dist/SHA256SUMS --verify-tag --title "XLua CSharp Navigation $RELEASE_TAG" --generate-notes
+          gh release create "$RELEASE_TAG" dist/*.zip dist/SHA256SUMS dist/updatePlugins.xml --draft --verify-tag --title "XLua CSharp Navigation $RELEASE_TAG" --generate-notes
+          gh release edit "$RELEASE_TAG" --draft=false --latest
